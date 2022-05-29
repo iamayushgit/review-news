@@ -1,3 +1,41 @@
+<?php
+//     if(isset($_POST['name'])){
+//     $server = "localhost";
+//     $username = "root";
+//     $password = "";
+
+//     $con = mysqli_connect($server, $username, $password);
+
+//     // if(!$con){
+//     //     die("connection to this database failed due to" . mysqli_connect_error());
+//     // }   
+//     // echo "Success connecting to the db";
+//     $fname = $_POST['fname'];
+//     $lname = $_POST['lname'];
+//     $username = $_POST['username'];
+//     $pass = $_POST['pass'];
+//     $city = $_POST['city'];
+//     $country = $_POST['country'];
+
+
+    
+//     $sql = "INSERT INTO `details'.'details' (`fname`, `lname`, `username`, `pass`, `city`, `country`) VALUES ('$fname', '$lname', '$username', '$pass', '$city', '$country');"
+   
+//     // echo $sql;
+
+//     // if($con->query($sql) == true){
+//     //     // echo "Successfully Inserted";
+
+//     // }
+//     // else{
+//     //      "Error: $sql <br> $con->error";
+//     // }
+//     // $con->close();
+//     // }
+// }
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +48,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link rel="stylesheet" href="contact.css">
+    <link rel="stylesheet" href="signup.css">
     <title>Review News</title>
 </head>
 
@@ -67,11 +105,12 @@
         </div>
     </nav>
     <br> <br>
+    
 
     <!-- html code for contact -->
     <!-- ...................................................... -->
 
-    <form class="row g-3 contact" action="signup.php" method="post">
+    <form class="row g-3 contact" action="adddata.php" method="post">
         <div class="col-md-6 col-sm-12">
             <label for="validationServer01" class="form-label">First name</label>
             <input type="text" name="fname" class="form-control is-valid" id="validationServer01" value="" required>
@@ -143,6 +182,59 @@
             <button class="btn btn-primary" type="submit">Submit form</button>
         </div>
     </form>
+    <table>
+        <tr>
+            <th>S.N.</th>
+            <th>Fname</th>
+            <th>Lname</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>Action</th>
+        </tr>
+
+        <?php
+        include 'db.php';
+        $sql ="SELECT * FROM details";
+        $result = mysqli_query($con, $sql);
+
+        if($result){
+            while ($row = mysqli_fetch_assoc($result)){
+                $id = $row['id'];
+                $fname = $row['fname'];
+                $lname = $row['lname'];
+                $username = $row['username'];
+                $pass = $row['pass'];
+                $city = $row['city'];
+                $country = $row['country'];
+
+                ?>
+
+                <tr>
+            <td> <?php echo $id ?> </td>
+            <td> <?php echo $fname ?> </td>
+            <td> <?php echo $lname ?> </td>
+            <td> <?php echo $username ?> </td>
+            <td> <?php echo $pass ?> </td>
+            <td> <?php echo $city ?> </td>
+            <td> <?php echo $country ?> </td>
+            <td>
+                <a href="edit.php?id=<?php echo $id ?>">Update</a>
+                <a href="delete.php?id=<?php echo $id ?>">Delete</a>
+                </td>
+                
+        </tr>
+                <?php
+
+            }
+        }
+
+
+        ?>
+
+        
+    </table>
 
 
     <!-- html code for footer -->
